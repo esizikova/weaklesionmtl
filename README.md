@@ -1,4 +1,6 @@
 # Improving Weakly Supervised Lesion Segmentation using Multi-Task Learning
+Tianshu Chu* (New York University), Xinmeng Li* (New York University), Huy V. Vo (Ecole Normale Superieure, INRIA and Valeo.ai), Ronald M. Summers (National Institutes of Health Clinical Center), Elena Sizikova (New York University)
+*- equal contribution.
 
 ## Introduction
 This is a code release of the paper "Weakly Supervised Lesion Segmentation using Multi-Task Learning". 
@@ -23,22 +25,57 @@ This work is released under the GNU General Public License (GNU GPL) license.
 2. git clone https://github.com/qubvel/segmentation_models.pytorch.git
 
 ## HAM10K Dataset
-Download and unzip to the folder code_ham/Data_ham:
+### Download and unzip to the folder code_ham/Data_ham:
 
 1. Raw images: https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DBW86T
 2. Ground true segmentations: https://www.kaggle.com/tschandl/ham10000-lesion-segmentations?select=HAM10000_segmentations_lesion_tschandl
+3. For data preprocessing:
+```
+python code_ham/HAM_data.py
+```
 
-## Trained checkpoints for HAM10K
+### Training
+Under code_ham/ directory
+
+1. To train A1 model in the paper: 
+```
+python HAM_A1_train.py
+```
+2. To train A1+L model in the paper:
+```
+python HAM_A1class_train.py
+```
+3. To train Acoseg model in the paper:
+```
+python HAM_Acoseg_train.py
+```
+
+### Evaluation
+Under code_ham/ directory
+
+1. To evaluate A1 model in the paper: 
+```
+python HAM_A1_eval.py
+```
+2. To evaluate A1+L model in the paper:
+```
+python HAM_A1class_eval.py
+```
+3. To evaluate Acoseg model in the paper:
+```
+python HAM_Acoseg_eval.py
+```
+
+### Trained checkpoints
 Put under the folder code_ham/checkpoints to evaluate:  
 
 1. A1: https://drive.google.com/file/d/12gK0K_SZNleFAFVwPjzspHIS3rsWGXEb/view?usp=sharing
 2. A1+L: https://drive.google.com/file/d/1yFIfjXay9TRw_Wn_QLbfAdhMpFhcAqdC/view?usp=sharing
 3. ACoseg: https://drive.google.com/file/d/1B-3bG26yqpnupkH-q-qNHp1_IrU4EQf4/view?usp=sharing
 
-## Instructions
-1. Run code_ham/HAM_data.ipynb for data preprocessing.
-2. Run code_ham/HAM_A1_A1class.ipynb for A1 and A1+L model in the paper.
-3. Run code_ham/HAM_ACoseg.ipynb for ACoseg model in the paper.
+
+## LiTS and DeepLesion Dataset
+TODO 
 
 ## Results
 ----
@@ -51,4 +88,15 @@ Visualization of sample segmentation results. 1st row - input lesion image. 2nd 
 <div align=center>
 <img src="images/segmentation_results.png" width="600"/>
 </div>
+
+## Citation
+
+```
+@inproceedings{chuli2021lesion_wsol,
+	title={Improving Weakly Supervised Lesion Segmentation Using Multi-Task Learning},
+	author={Chu, Tianshu and Li, Xinmeng and Vo, Huy V. and Summers, Ronald M. and Sizikova, Elena},
+	booktitle={Proceedings of the Medical Imaging with Deep Learning (MIDL) Conference},
+	year={2021}
+}
+```
 
