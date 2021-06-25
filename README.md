@@ -2,6 +2,7 @@
 Tianshu Chu* (New York University), Xinmeng Li* (New York University), Huy V. Vo (Ecole Normale Superieure, INRIA and Valeo.ai), Ronald M. Summers (National Institutes of Health Clinical Center), Elena Sizikova (New York University)
 *- equal contribution.
 
+Link to <a href="https://esizikova.github.io/files/midl21_poster.pdf">Poster</a> and <a href="https://drive.google.com/file/d/1JJoj9DyuYRO73J3jJ_V78ui-XkbMScGs/view">Video</a>. 
 ## Introduction
 This is a code release of the paper "Weakly Supervised Lesion Segmentation using Multi-Task Learning". 
 
