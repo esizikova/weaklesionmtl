@@ -1,35 +1,28 @@
-# adapted from https://github.com/sairin1202/Semantic-Aware-Attention-Based-Deep-Object-Co-segmentation/model.py
-
-path = '../../segmentation_models.pytorch/'
-
 import torch
 from torch.autograd import Variable
 import torch.nn as nn
 import torch.nn.functional as F
 from torchvision.models import vgg16
-
-
 import sys
-sys.path.append(path)
+sys.path.append('../segmentation_models.pytorch/')
 import segmentation_models_pytorch as smp
 class model1(nn.Module):
     def __init__(self):
         super(model1, self).__init__()
         # model = smp.Unet()
-        #self.deeplab_model =  smp.DeepLabV3Plus(encoder_name='resnet101', encoder_weights='imagenet')
         self.deeplab_model =  smp.DeepLabV3Plus(encoder_name='resnet101')
+
         # encoder
         self.deeplab_encoder = self.deeplab_model.encoder
-        #self.deeplab_encoder = self.deeplab_encoder.cuda(0)
         
         # self attention generation
-        self.global_avg_pool = nn.AdaptiveAvgPool2d((1, 1))#.cuda(0)
+        self.global_avg_pool = nn.AdaptiveAvgPool2d((1, 1))
         
-        self.mlp1a = nn.Linear(2048, 4096)#.cuda(0)
-        self.mlp2a = nn.Linear(4096, 2048)#.cuda(0)
+        self.mlp1a = nn.Linear(2048, 4096)
+        self.mlp2a = nn.Linear(4096, 2048)
         
-        self.mlp1b = nn.Linear(256, 4096)#.cuda(0)
-        self.mlp2b = nn.Linear(4096, 256)#.cuda(0)
+        self.mlp1b = nn.Linear(256, 4096)
+        self.mlp2b = nn.Linear(4096, 256)
     
         self.upsample = nn.Upsample(16)#.cuda(0)
 
@@ -37,7 +30,6 @@ class model1(nn.Module):
         self.deeplab_decoder = self.deeplab_model.decoder
         self.deeplab_decoder = self.deeplab_decoder#.cuda(1)
         self.deeplab_seghead = self.deeplab_model.segmentation_head
-        # self.dec = Decoder(2, 512, 2, activ='relu', pad_type='reflect')
 
     def forward(self, x, y):
         # reconstruct an image
@@ -47,21 +39,14 @@ class model1(nn.Module):
         return images_recon_x, images_recon_y
 
     def generate_attention(self, x):
-        all_features_x = self.deeplab_encoder(x)
-        
+        all_features_x = self.deeplab_encoder(x)    
         features1_x = all_features_x[-1]
         features2_x = all_features_x[-4]
-
         feature1_x = self.global_avg_pool(features1_x)
-#         attention1_x = self.upsample(F.sigmoid(self.mlp2a(
-#             F.tanh(self.mlp1a(feature1_x.view(-1, 2048))))).view(-1, 2048, 1, 1))
         attention1_x = F.sigmoid(self.mlp2a(
             F.tanh(self.mlp1a(feature1_x.view(-1, 2048))))).view(-1, 2048, 1, 1)
 
-
         feature2_x = self.global_avg_pool(features2_x)
-#         attention2_x = self.upsample(F.sigmoid(self.mlp2b(
-#             F.tanh(self.mlp1b(feature2_x.view(-1, 256))))).view(-1, 256, 1, 1))
         attention2_x = F.sigmoid(self.mlp2b(F.tanh(self.mlp1b(feature2_x.view(-1, 256))))).view(-1, 256, 1, 1)
 
 
@@ -90,20 +75,15 @@ class model1(nn.Module):
         vgg_y[-1] = vgg_y[-1] * attention1_y
         vgg_y[-4] = vgg_y[-4] * attention2_y
 
-
-
         # decode content to an image
         mask_x = self.deeplab_decoder(*vgg_x)
         mask_y = self.deeplab_decoder(*vgg_y)
 
         seg_x = self.deeplab_seghead(mask_x)
         seg_y = self.deeplab_seghead(mask_y)
-        # mask_x = self.dec(attention_y * vgg_x)
-        # mask_y = self.dec(attention_x * vgg_y)
-        #print("image size:",images.size())
         return seg_x, seg_y 
 
-
+    
 
 class model(nn.Module):
     def __init__(self):
@@ -264,3 +244,4 @@ class Conv2dBlock(nn.Module):
         if self.activation:
             x = self.activation(x)
         return x
+

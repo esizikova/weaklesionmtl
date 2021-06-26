@@ -3,6 +3,8 @@ Tianshu Chu* (New York University), Xinmeng Li* (New York University), Huy V. Vo
 *- equal contribution.
 
 Link to <a href="https://esizikova.github.io/files/midl21_poster.pdf">Poster</a> and <a href="https://drive.google.com/file/d/1JJoj9DyuYRO73J3jJ_V78ui-XkbMScGs/view">Video</a>. 
+
+
 ## Introduction
 This is a code release of the paper "Weakly Supervised Lesion Segmentation using Multi-Task Learning". 
 
@@ -74,9 +76,102 @@ Put under the folder code_ham/checkpoints to evaluate:
 2. A1+L: https://drive.google.com/file/d/1yFIfjXay9TRw_Wn_QLbfAdhMpFhcAqdC/view?usp=sharing
 3. ACoseg: https://drive.google.com/file/d/1B-3bG26yqpnupkH-q-qNHp1_IrU4EQf4/view?usp=sharing
 
+## LiTS Dataset
+### Download and unzip to the folder code_lits/data:
 
-## LiTS and DeepLesion Dataset
-TODO 
+1. Unzip the raw images and segmentations to code_lits/data/volume/ and code_lits/data/segmentations/: https://www.kaggle.com/andrewmvd/liver-tumor-segmentation 
+https://www.kaggle.com/andrewmvd/liver-tumor-segmentation-part-2?select=volume_pt6 
+3. For data preprocessing:
+```
+python code_lits/lits_data.py
+```
+
+### Training
+Under code_lits/ directory
+
+1. To train A1 model in the paper: 
+```
+python lits_A1_train.py
+```
+2. To train A1+L model in the paper:
+```
+python lits_A1class_train.py
+```
+3. To train Acoseg model in the paper:
+```
+python lits_Acoseg_train.py
+```
+
+### Evaluation
+Under code_lits/ directory
+
+1. To evaluate A1 model in the paper: 
+```
+python lits_A1_eval.py
+```
+2. To evaluate A1+L model in the paper:
+```
+python lits_A1class_eval.py
+```
+3. To evaluate Acoseg model in the paper:
+```
+python lits_Acoseg_eval.py
+```
+
+### Trained checkpoints
+Put under the folder code_lits/checkpoints to evaluate:  
+
+1. A1: https://drive.google.com/file/d/1EpQGDLOC8q95oqSvm0bZO6JdFSznCRKw/view?usp=sharing
+2. A1+L: https://drive.google.com/file/d/1OQFggEsLT2B84Na1iBITnmiip2dQULiw/view?usp=sharing
+3. ACoseg: https://drive.google.com/file/d/1vj4-vqEsfdET031Motq45I7KZRB6b8sC/view?usp=sharing
+
+
+## DeepLesion Dataset
+### Download and unzip to the folder code_deeplesion/Data_deep:
+1. For data preprocessing:
+```
+python code_deeplesion/DeepLesion_data.py
+```
+
+### Training
+Under code_deeplesion/ directory
+
+1. To train A1 model in the paper: 
+```
+python deeplesion_A1_train.py
+```
+2. To train A1+L model in the paper:
+```
+python deeplesion_A1class_train.py
+```
+3. To train Acoseg model in the paper:
+```
+python deeplesion_A1coseg_train.py
+```
+
+### Evaluation
+Under code_deeplesion/ directory
+
+1. To evaluate A1 model in the paper: 
+```
+python deeplesion_A1_eval.py
+```
+2. To evaluate A1+L model in the paper:
+```
+python deeplesion_A1class_eval.py
+```
+3. To evaluate Acoseg model in the paper:
+```
+python deeplesion_A1coseg_eval.py
+```
+
+### Trained checkpoints
+Put under the folder code_deeplesion/checkpoints to evaluate:  
+
+1. A1: https://drive.google.com/file/d/1NlwB0dr_hCgpIdro6T4wrjAr1pO4ulFS/view?usp=sharing
+2. A1+L: https://drive.google.com/file/d/1V-NisPmQwvXy3TjawhFeEABIXtNxZfKQ/view?usp=sharing
+3. ACoseg: https://drive.google.com/file/d/1ygR4FZCwRkR0a87vzKeGqYEjl_n4A0tQ/view?usp=sharing
+
 
 ## Results
 ----
